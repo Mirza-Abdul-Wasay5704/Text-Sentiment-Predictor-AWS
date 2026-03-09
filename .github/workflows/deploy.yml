@@ -10,11 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Install Docker
-        run: sudo apt-get install docker.io -y
 
       - name: Build Docker image
         run: docker build -t sentiment-api .
