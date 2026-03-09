@@ -1,13 +1,16 @@
-import joblib
+from transformers import pipeline
 
-# load model and vectorizer
-model = joblib.load("model/model.pkl")
-vectorizer = joblib.load("model/vectorizer.pkl")
+sentiment_pipeline = None
 
+def load_model():
 
-def predict_sentiment(text: str):
-    text_vector = vectorizer.transform([text])
-    prediction = model.predict(text_vector)
-    return prediction[0]
+    global sentiment_pipeline
 
+    if sentiment_pipeline is None:                                          
+        sentiment_pipeline = pipeline(
+            "sentiment-analysis",
+            model="distilbert-base-uncased-finetuned-sst-2-english"
+        )
 
+        # warmup
+        sentiment_pipeline("hello world")
