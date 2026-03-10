@@ -1,0 +1,72 @@
+2026-03-08 02:16:54,908 - INFO - Input: beat india and america. | Predicted Sentiment: neutral
+2026-03-08 02:17:08,913 - INFO - Input: destroy india and america. | Predicted Sentiment: negative
+2026-03-08 02:18:45,346 - INFO - Input: mujhe USA ko barbaad karna hai | Predicted Sentiment: neutral
+2026-03-08 02:19:12,857 - INFO - Input: mujhe samsung s24 ultra pasand hai | Predicted Sentiment: neutral
+2026-03-08 02:19:16,905 - INFO - Input: mujhe samsung s24 ultra pasand hai | Predicted Sentiment: neutral
+2026-03-08 02:19:42,460 - INFO - Input: i adore samsung s24 ultra | Predicted Sentiment: neutral
+2026-03-08 02:19:46,260 - INFO - Input: i adore samsung s24 ultra | Predicted Sentiment: neutral
+2026-03-08 02:19:58,267 - INFO - Input: i adore samsung s24 ultra and iphone16 | Predicted Sentiment: neutral
+2026-03-08 02:20:07,210 - INFO - Input: i like samsung s24 ultra and iphone16 | Predicted Sentiment: neutral
+2026-03-08 02:20:11,766 - INFO - Input: i like samsung s24 ultra and iphone16 | Predicted Sentiment: neutral
+2026-03-08 02:20:17,495 - INFO - Input: i love samsung s24 ultra and iphone16 | Predicted Sentiment: positive
+2026-03-08 02:20:29,036 - INFO - Input: i avoid samsung s24 ultra and iphone16 | Predicted Sentiment: neutral
+2026-03-08 02:20:38,126 - INFO - Input: i hate samsung s24 ultra and iphone16 | Predicted Sentiment: negative
+2026-03-08 14:36:07,717 - INFO - Input: i adore the samsumg s24 ultra | Predicted Sentiment: POSITIVE
+2026-03-08 14:36:39,717 - INFO - Input: mujhe iphone 16 bohot bura lgta hai | Predicted Sentiment: NEGATIVE
+2026-03-08 14:37:31,698 - INFO - Input: mujhe google pixel phone kuch khass nhi lgta hai | Predicted Sentiment: NEGATIVE
+2026-03-08 14:37:50,429 - INFO - Input: me to sahih hun | Predicted Sentiment: POSITIVE
+2026-03-08 14:39:13,370 - INFO - Input: mujhe hajj krne jana hai | Predicted Sentiment: NEGATIVE
+2026-03-08 14:39:50,224 - INFO - Input: mujhe wars nhi pasand | Predicted Sentiment: NEGATIVE
+2026-03-08 14:40:15,754 - INFO - Input: mujhe tum bohot achay lagtay ho | Predicted Sentiment: NEGATIVE
+2026-03-08 14:40:47,977 - INFO - Input: i love you | Predicted Sentiment: POSITIVE
+2026-03-08 14:41:58,861 - INFO - Input: End-to-end MLOps project with CI/CD, Docker, AWS EC2 deployment and monitoring | Predicted Sentiment: NEGATIVE
+2026-03-08 14:59:58,203 - INFO - Input: i love deep learning | Predicted Sentiment: POSITIVE | Confidence: 0.9998319149017334
+2026-03-08 15:00:22,519 - INFO - Input: i adore deep learning | Predicted Sentiment: POSITIVE | Confidence: 0.9996838569641113
+2026-03-08 15:00:31,457 - INFO - Input: i hate deep learning | Predicted Sentiment: NEGATIVE | Confidence: 0.9961016178131104
+2026-03-08 16:16:50,349 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-03-08 16:16:50,351 - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-03-08 16:16:50,603 - INFO - HTTP Request: GET https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-03-08 16:16:50,991 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+2026-03-08 16:16:51,350 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/xet-read-token/714eb0fa89d2f80546fda750413ed43d93601a13 "HTTP/1.1 200 OK"
+2026-03-08 16:20:53,422 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-03-08 16:20:53,705 - INFO - HTTP Request: GET https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-03-08 16:20:54,127 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:20:54,420 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-03-08 16:20:54,671 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:20:54,908 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-03-08 16:20:55,220 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/vocab.txt "HTTP/1.1 200 OK"
+2026-03-08 16:20:55,473 - INFO - HTTP Request: GET https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/vocab.txt "HTTP/1.1 200 OK"
+2026-03-08 16:20:56,012 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/tokenizer.json "HTTP/1.1 404 Not Found"
+2026-03-08 16:20:56,321 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/added_tokens.json "HTTP/1.1 404 Not Found"
+2026-03-08 16:20:56,594 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/special_tokens_map.json "HTTP/1.1 404 Not Found"
+2026-03-08 16:20:56,844 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/chat_template.jinja "HTTP/1.1 404 Not Found"
+2026-03-08 16:21:24,387 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-03-08 16:21:24,979 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:21:25,218 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-03-08 16:21:25,457 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:21:25,700 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-03-08 16:23:14,847 - ERROR - Error processing input: i am going to deploy it on AWS | Error: 'NoneType' object is not callable
+2026-03-08 16:26:58,979 - ERROR - Error processing input: i love samsung phone. | Error: 'NoneType' object is not callable
+2026-03-08 16:33:50,781 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-03-08 16:33:51,187 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:33:51,424 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-03-08 16:33:51,664 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:33:51,902 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-03-08 16:34:04,828 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-03-08 16:34:05,188 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:34:05,420 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-03-08 16:34:05,654 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:34:05,887 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-03-08 16:39:09,266 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-03-08 16:39:09,617 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:39:09,856 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-03-08 16:39:10,094 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:39:10,331 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-03-08 16:39:39,399 - INFO - HTTP Request: HEAD https://huggingface.co/distilbert-base-uncased-finetuned-sst-2-english/resolve/main/config.json "HTTP/1.1 200 OK"
+2026-03-08 16:39:39,400 - WARNING - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-03-08 16:39:39,920 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:39:40,160 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-03-08 16:39:40,397 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+2026-03-08 16:39:40,638 - INFO - HTTP Request: GET https://huggingface.co/api/models/distilbert/distilbert-base-uncased-finetuned-sst-2-english/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-03-08 16:40:24,669 - INFO - Input: i love samsung phone | Predicted Sentiment: POSITIVE | Confidence: 0.9992865920066833 | Model: distilbert-base-uncased-finetuned-sst-2-english
+2026-03-08 16:41:12,325 - INFO - Input: yaar mujhe pakistan cricket team pasand nhi hai | Predicted Sentiment: NEGATIVE | Confidence: 0.6173385381698608 | Model: distilbert-base-uncased-finetuned-sst-2-english
