@@ -1,6 +1,7 @@
-﻿fastapi
+﻿--extra-index-url https://download.pytorch.org/whl/cpu
+
+fastapi
 uvicorn
 transformers
 pydantic
-
-torch==2.2.2 --index-url https://download.pytorch.org/whl/cpu
+torch==2.2.2
