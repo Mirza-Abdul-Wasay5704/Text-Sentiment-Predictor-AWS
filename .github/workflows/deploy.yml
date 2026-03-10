@@ -19,7 +19,7 @@ jobs:
           script: |
             cd ~/Text-Sentiment-Predictor-AWS
             git pull origin main
-            docker build -t sentiment-api .
-            docker stop sentiment-api || true
-            docker rm sentiment-api || true
-            docker run -d --name sentiment-api -p 8000:8000 sentiment-api
+            sudo docker build -t sentiment-api .
+            sudo docker stop sentiment-api || true
+            sudo docker rm sentiment-api || true
+            sudo docker run -d --name sentiment-api -p 8000:8000 sentiment-api
