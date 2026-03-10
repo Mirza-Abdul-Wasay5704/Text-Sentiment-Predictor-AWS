@@ -10,8 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Build Docker image
-        run: docker build -t sentiment-api .
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/Text-Sentiment-Predictor-AWS
+            git pull origin main
+            docker build -t sentiment-api .
+            docker stop sentiment-api || true
+            docker rm sentiment-api || true
+            docker run -d --name sentiment-api -p 8000:8000 sentiment-api
