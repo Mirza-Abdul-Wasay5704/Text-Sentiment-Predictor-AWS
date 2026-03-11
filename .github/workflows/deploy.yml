@@ -52,13 +52,22 @@ jobs:
           script: |
             IMAGE="ghcr.io/mirza-abdul-wasay5704/text-sentiment-predictor-aws:latest"
 
-            cd ~/app || mkdir -p ~/app && cd ~/app
+            # Create app directory if it doesn't exist, then cd into it
+            mkdir -p ~/app
+            cd ~/app
 
             # Pull latest code (for docker-compose.yml and monitoring configs)
             if [ -d ".git" ]; then
               git pull origin main
             else
               git clone https://github.com/mirza-abdul-wasay5704/Text-Sentiment-Predictor-AWS.git .
+            fi
+
+            # Install Docker Compose plugin if not available
+            if ! sudo docker compose version &> /dev/null; then
+              sudo mkdir -p /usr/local/lib/docker/cli-plugins
+              sudo curl -SL https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
+              sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
             fi
 
             # Pull latest app image
