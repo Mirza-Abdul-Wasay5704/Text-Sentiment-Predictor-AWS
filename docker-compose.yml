@@ -1,0 +1,55 @@
+services:
+
+  # --- Tumhara FastAPI App ---
+  sentiment-app:
+    build: .                          # Current Dockerfile use karega
+    container_name: sentiment-app
+    ports:
+      - "8000:8000"                   # localhost:8000 se access hoga
+    volumes:
+      - ./logs:/app/logs              # Logs host pe persist hongay
+    networks:
+      - monitoring-net
+
+  # --- Prometheus: Metrics collector ---
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"                   # localhost:9090 se Prometheus UI access
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml   # Config mount
+      - prometheus-data:/prometheus                                  # Data persist
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.retention.time=15d'     # 15 din ka data rakho
+    depends_on:
+      - sentiment-app                 # Pehle app start ho, phir Prometheus
+    networks:
+      - monitoring-net
+
+  # --- Grafana: Dashboards ---
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"                   # localhost:3000 se Grafana UI access
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning  # Auto datasource config
+      - ./monitoring/grafana/dashboards:/etc/grafana/dashboards        # Dashboards mount
+      - grafana-data:/var/lib/grafana                                # Dashboards persist
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin        # Grafana login username
+      - GF_SECURITY_ADMIN_PASSWORD=admin    # Grafana login password (baad mein change karna)
+    depends_on:
+      - prometheus                    # Pehle Prometheus start ho, phir Grafana
+    networks:
+      - monitoring-net
+
+volumes:
+  prometheus-data:       # Prometheus ka data Docker volume mein store hoga
+  grafana-data:          # Grafana ke dashboards/settings persist hongay
+
+networks:
+  monitoring-net:        # Teeno containers is network pe honge — ek doosre ko naam se access kar sakte hain
+    driver: bridge
