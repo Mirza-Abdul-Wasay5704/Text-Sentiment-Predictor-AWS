@@ -2,7 +2,8 @@ services:
 
   # --- Tumhara FastAPI App ---
   sentiment-app:
-    build: .                          # Current Dockerfile use karega
+    image: ghcr.io/mirza-abdul-wasay5704/text-sentiment-predictor-aws:latest
+    build: .                          # Local dev ke liye: docker compose up --build
     container_name: sentiment-app
     ports:
       - "8000:8000"                   # localhost:8000 se access hoga

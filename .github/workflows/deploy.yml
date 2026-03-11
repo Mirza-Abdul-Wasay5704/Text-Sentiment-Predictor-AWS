@@ -48,7 +48,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          command_timeout: 10m
+          command_timeout: 20m
           script: |
             IMAGE="ghcr.io/mirza-abdul-wasay5704/text-sentiment-predictor-aws:latest"
 
@@ -76,5 +76,5 @@ jobs:
             # Stop old containers
             sudo docker compose down || true
 
-            # Start all 3 services (app + prometheus + grafana)
-            sudo docker compose up -d
+            # Start all 3 services — no build needed, image already pulled
+            sudo docker compose up -d --no-build
