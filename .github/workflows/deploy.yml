@@ -36,6 +36,7 @@ jobs:
           push: true
           tags: ${{ env.IMAGE }}
 
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -50,7 +51,21 @@ jobs:
           command_timeout: 10m
           script: |
             IMAGE="ghcr.io/mirza-abdul-wasay5704/text-sentiment-predictor-aws:latest"
+
+            cd ~/app || mkdir -p ~/app && cd ~/app
+
+            # Pull latest code (for docker-compose.yml and monitoring configs)
+            if [ -d ".git" ]; then
+              git pull origin main
+            else
+              git clone https://github.com/mirza-abdul-wasay5704/Text-Sentiment-Predictor-AWS.git .
+            fi
+
+            # Pull latest app image
             sudo docker pull $IMAGE
-            sudo docker stop $(sudo docker ps -q) || true
-            sudo docker rm $(sudo docker ps -aq) || true
-            sudo docker run -d --name sentiment-api -p 8000:8000 $IMAGE
+
+            # Stop old containers
+            sudo docker compose down || true
+
+            # Start all 3 services (app + prometheus + grafana)
+            sudo docker compose up -d
