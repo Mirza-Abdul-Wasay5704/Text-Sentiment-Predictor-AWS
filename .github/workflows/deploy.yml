@@ -50,6 +50,16 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           command_timeout: 20m
           script: |
+            # Ensure swap exists (prevents OOM freeze on t3.micro)
+            if [ ! -f /swapfile ]; then
+              sudo fallocate -l 2G /swapfile
+              sudo chmod 600 /swapfile
+              sudo mkswap /swapfile
+              sudo swapon /swapfile
+              echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+            fi
+            sudo swapon /swapfile 2>/dev/null || true
+
             IMAGE="ghcr.io/mirza-abdul-wasay5704/text-sentiment-predictor-aws:latest"
 
             # Create app directory if it doesn't exist, then cd into it
