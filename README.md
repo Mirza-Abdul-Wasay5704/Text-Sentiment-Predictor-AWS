@@ -2,7 +2,7 @@
 
 **A full-stack AI-powered web application that analyzes the sentiment of any English text in real time.**
 
-Built with FastAPI, React, HuggingFace Transformers, Docker, and deployed on AWS EC2 with a fully automated CI/CD pipeline using GitHub Actions.
+Built with FastAPI, React, HuggingFace Transformers, Docker, Prometheus, and Grafana — deployed on AWS EC2 with a fully automated CI/CD pipeline using GitHub Actions and real-time model monitoring.
 
 ![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.135-009688?logo=fastapi)
@@ -10,6 +10,8 @@ Built with FastAPI, React, HuggingFace Transformers, Docker, and deployed on AWS
 ![Docker](https://img.shields.io/badge/Docker-Multi--Stage-2496ED?logo=docker)
 ![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?logo=amazonaws)
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub_Actions-2088FF?logo=githubactions)
+![Prometheus](https://img.shields.io/badge/Prometheus-Monitoring-E6522C?logo=prometheus)
+![Grafana](https://img.shields.io/badge/Grafana-Dashboards-F46800?logo=grafana)
 
 ---
 
@@ -27,6 +29,7 @@ Built with FastAPI, React, HuggingFace Transformers, Docker, and deployed on AWS
 - [Containerization — Docker](#-containerization--docker)
 - [CI/CD Pipeline — GitHub Actions](#-cicd-pipeline--github-actions)
 - [AWS Deployment](#-aws-deployment)
+- [Monitoring — Prometheus & Grafana](#-monitoring--prometheus--grafana)
 - [How It All Connects](#-how-it-all-connects)
 - [Local Development](#-local-development)
 - [Key Concepts & Technologies](#-key-concepts--technologies)
@@ -45,6 +48,7 @@ This project is an **end-to-end MLOps system** — from data preprocessing to mo
 - Dockerized multi-stage build
 - Automated build & deploy pipeline
 - Cloud-hosted on AWS
+- **Real-time model monitoring** with Prometheus metrics & Grafana dashboards
 
 ---
 
@@ -87,7 +91,7 @@ This project is an **end-to-end MLOps system** — from data preprocessing to mo
                              │
                              ▼
 ┌──────────────────────────────────────────────────────────────────┐
-│                    AWS EC2 (t3.micro)                             │
+│                    AWS EC2 (t3.small)                             │
 │                                                                  │
 │   ┌──────────────────────────────────────────────────────────┐   │
 │   │                Docker Container                          │   │
@@ -98,6 +102,7 @@ This project is an **end-to-end MLOps system** — from data preprocessing to mo
 │   │   │  GET  /*        → Serve React (index.html)       │   │   │
 │   │   │  POST /predict  → Run Model Inference            │   │   │
 │   │   │  GET  /docs     → Swagger UI                     │   │   │
+│   │   │  GET  /metrics  → Prometheus Metrics             │   │   │
 │   │   │                                                  │   │   │
 │   │   │  ┌────────────────────────────────────────────┐  │   │   │
 │   │   │  │  HuggingFace Transformers                  │  │   │   │
@@ -105,6 +110,13 @@ This project is an **end-to-end MLOps system** — from data preprocessing to mo
 │   │   │  │  PyTorch Runtime (CPU)                     │  │   │   │
 │   │   │  └────────────────────────────────────────────┘  │   │   │
 │   │   └──────────────────────────────────────────────────┘   │   │
+│   │                                                          │   │
+│   │   ┌──────────────┐   ┌──────────────┐                    │   │
+│   │   │  Prometheus   │──▶│   Grafana    │                    │   │
+│   │   │  :9090        │   │   :3000      │                    │   │
+│   │   │  (scrape      │   │ (dashboards) │                    │   │
+│   │   │   /metrics)   │   │              │                    │   │
+│   │   └──────────────┘   └──────────────┘                    │   │
 │   └──────────────────────────────────────────────────────────┘   │
 └──────────────────────────────────────────────────────────────────┘
                              ▲
@@ -161,6 +173,7 @@ This project is an **end-to-end MLOps system** — from data preprocessing to mo
 | **Cloud** | AWS EC2 (t3.micro) | Production hosting |
 | **Networking** | AWS Security Groups | Firewall / inbound rules |
 | **Data** | Pandas, scikit-learn, Jupyter | Preprocessing & experimentation |
+| **Monitoring** | Prometheus, Grafana | Real-time metrics & dashboards |
 | **Logging** | Python `logging` module | Request & error tracking |
 | **Version Control** | Git, GitHub | Source code management |
 
@@ -176,6 +189,7 @@ Text-Sentiment-Predictor-AWS/
 │   ├── schemas.py                  #    Pydantic request/response models
 │   ├── model_loader.py             #    HuggingFace model loading + warmup
 │   ├── inference.py                #    Prediction logic
+│   ├── metrics.py                  #    Prometheus metrics definitions
 │   └── logger.py                   #    File-based logging setup
 │
 ├── frontend/                       # 🎨 React Frontend
@@ -198,12 +212,24 @@ Text-Sentiment-Predictor-AWS/
 ├── notebooks/                      # 📓 Jupyter Notebooks
 │   └── preprocess.ipynb            #    Data cleaning & exploration
 │
+├── monitoring/                     # 📈 Monitoring Configuration
+│   ├── prometheus.yml              #    Prometheus scrape config
+│   └── grafana/
+│       ├── dashboards/
+│       │   └── sentiment-dashboard.json  # Pre-built Grafana dashboard
+│       └── provisioning/
+│           ├── datasources/
+│           │   └── datasource.yml  #    Auto-connect Grafana → Prometheus
+│           └── dashboards/
+│               └── dashboard.yml   #    Auto-load dashboard on startup
+│
 ├── logs/                           # 📝 Runtime logs
 ├── tests/                          # 🧪 Test directory
 │
 ├── .github/workflows/
 │   └── deploy.yml                  #    CI/CD pipeline definition
 │
+├── docker-compose.yml              #    Multi-container orchestration
 ├── Dockerfile                      #    Multi-stage Docker build
 ├── requirements.txt                #    Python dependencies
 ├── .gitignore                      #    Git exclusions
@@ -221,6 +247,7 @@ The backend is a **FastAPI** application that serves both the REST API and the R
 | Method | Route | Description |
 |---|---|---|
 | `POST` | `/predict` | Accepts `{"text": "..."}`, returns sentiment analysis |
+| `GET` | `/metrics` | Prometheus-compatible metrics endpoint |
 | `GET` | `/docs` | Auto-generated Swagger documentation |
 | `GET` | `/*` | Serves the React frontend (SPA catch-all) |
 
@@ -243,11 +270,24 @@ User text → HuggingFace pipeline → DistilBERT → {label, confidence, model}
 
 The model is loaded **once** at startup and reused for every request — no cold starts after the initial load.
 
+### Prometheus Metrics
+
+The API exposes four custom metrics at `/metrics` for real-time monitoring:
+
+| Metric | Type | What It Tracks |
+|---|---|---|
+| `prediction_total` | Counter | Total predictions by label (POSITIVE/NEGATIVE) |
+| `prediction_latency_seconds` | Histogram | Time taken per prediction |
+| `prediction_confidence` | Histogram | Model confidence score distribution |
+| `prediction_errors_total` | Counter | Total failed predictions |
+
+These metrics are scraped by Prometheus every 15 seconds and visualized in Grafana dashboards.
+
 ### Logging
 
-Every prediction is logged to `logs/app.log`:
+Every prediction is logged to `logs/app.log` with latency tracking:
 ```
-2026-03-11 - INFO - Input: I love this! | Predicted Sentiment: POSITIVE | Confidence: 0.9998 | Model: distilbert-...
+2026-03-11 - INFO - Input: I love this! | Predicted Sentiment: POSITIVE | Confidence: 0.9998 | Latency: 0.0437s | Model: distilbert-...
 ```
 
 ### CORS
@@ -386,16 +426,18 @@ git push origin main
 │  1. docker pull <image>      │
 │  2. Stop old containers      │
 │  3. Remove old containers    │
-│  4. docker run (port 8000)   │
+│  4. docker compose up        │
+│     (app + prometheus +      │
+│      grafana)                │
 └──────────────┬───────────────┘
                │
                ▼
-        🟢 APP IS LIVE
+   🟢 APP + MONITORING LIVE
 ```
 
 ### Why Build on GitHub, Not EC2?
 
-The EC2 instance is a **t3.micro** (1 vCPU, 1GB RAM). Building Node + PyTorch requires significantly more memory. GitHub Actions runners have **16GB RAM** — perfect for heavy builds. EC2 only needs to **pull and run** the pre-built ~1GB image.
+The EC2 instance is a **t3.small** (2 vCPU, 2GB RAM). Building Node + PyTorch requires significantly more memory. GitHub Actions runners have **16GB RAM** — perfect for heavy builds. EC2 only needs to **pull and run** the pre-built image via `docker compose up --no-build`.
 
 ### GitHub Container Registry (ghcr.io)
 
@@ -421,19 +463,23 @@ The EC2 instance is a **t3.micro** (1 vCPU, 1GB RAM). Building Node + PyTorch re
 
 | Property | Value |
 |---|---|
-| **Instance Type** | t3.micro (1 vCPU, 1 GiB RAM) |
+| **Instance Type** | t3.small (2 vCPU, 2 GiB RAM) |
 | **OS** | Ubuntu (Linux) |
 | **Region** | us-east-2 (Ohio) |
-| **Software** | Docker |
+| **Elastic IP** | Static public IP (persists across stop/start) |
+| **Swap** | 2GB swap file (prevents OOM on heavy load) |
+| **Software** | Docker, Docker Compose |
 
 ### Security Groups (Firewall)
 
-| Rule | Port | Purpose |
-|---|---|---|
-| SSH | 22 | GitHub Actions deployment (SSH access) |
-| HTTP | 80 | Standard web traffic |
-| HTTPS | 443 | Secure web traffic |
-| Custom TCP | 8000 | Application port (FastAPI + React) |
+| Rule | Port | Source | Purpose |
+|---|---|---|---|
+| SSH | 22 | 0.0.0.0/0 | GitHub Actions deployment (SSH access) |
+| HTTP | 80 | 0.0.0.0/0 | Standard web traffic |
+| HTTPS | 443 | 0.0.0.0/0 | Secure web traffic |
+| Custom TCP | 8000 | 0.0.0.0/0 | Application port (FastAPI + React) |
+| Custom TCP | 3000 | My IP | Grafana monitoring dashboard |
+| Custom TCP | 9090 | My IP | Prometheus metrics UI |
 
 ### Elastic IP (Recommended)
 
@@ -442,20 +488,101 @@ AWS assigns dynamic public IPs by default — they change on instance stop/start
 ### What Runs on EC2
 
 ```
-EC2 Instance
-└── Docker
-    └── sentiment-api container
-        ├── Uvicorn (ASGI server)
-        ├── FastAPI (API + static serving)
-        ├── DistilBERT model (in memory)
-        └── React frontend (static files)
+EC2 Instance (t3.small + 2GB swap)
+└── Docker Compose
+    ├── sentiment-app container (:8000)
+    │   ├── Uvicorn (ASGI server)
+    │   ├── FastAPI (API + static serving)
+    │   ├── DistilBERT model (in memory)
+    │   ├── Prometheus metrics endpoint (/metrics)
+    │   └── React frontend (static files)
+    │
+    ├── prometheus container (:9090)
+    │   ├── Scrapes /metrics every 15s
+    │   └── Stores time-series data (15d retention)
+    │
+    └── grafana container (:3000)
+        ├── Auto-provisioned Prometheus datasource
+        └── Pre-loaded Sentiment Monitoring dashboard
 ```
 
-Everything runs in a **single container on port 8000** — minimal infrastructure, maximum simplicity.
+Three containers orchestrated via **Docker Compose** on a shared network — Prometheus scrapes the app, Grafana queries Prometheus.
 
 ---
 
-## 🔗 How It All Connects
+## � Monitoring — Prometheus & Grafana
+
+The project includes a full **real-time monitoring stack** that tracks model performance, API health, and system behavior.
+
+### Architecture
+
+```
+FastAPI (/metrics)  →  Prometheus (scrape every 15s)  →  Grafana (dashboards)
+     :8000                    :9090                          :3000
+```
+
+### Metrics Tracked
+
+| Metric | Type | Purpose |
+|---|---|---|
+| `prediction_total` | Counter | Track total predictions by label (POSITIVE/NEGATIVE) — detect label drift |
+| `prediction_latency_seconds` | Histogram | Measure prediction speed — catch performance degradation |
+| `prediction_confidence` | Histogram | Monitor model confidence — detect model degradation or out-of-domain inputs |
+| `prediction_errors_total` | Counter | Track API failures — catch bugs or crashes early |
+
+### Grafana Dashboard Panels
+
+| Panel | Visualization | What It Shows |
+|---|---|---|
+| **Prediction Request Rate** | Time series | Requests per second — traffic patterns |
+| **Average Prediction Latency** | Time series | How fast the model responds |
+| **Average Model Confidence** | Time series | Model certainty over time |
+| **Total Predictions by Label** | Stat | Big number cards — POSITIVE vs NEGATIVE count |
+| **Error Rate** | Time series | Failed predictions over time |
+| **Latency Percentiles (P50/P95/P99)** | Time series | Performance distribution — worst-case latency |
+
+### Key PromQL Queries
+
+```promql
+# Request rate per label
+rate(prediction_total[1m])
+
+# Average latency
+rate(prediction_latency_seconds_sum[1m]) / rate(prediction_latency_seconds_count[1m])
+
+# 99th percentile latency
+histogram_quantile(0.99, rate(prediction_latency_seconds_bucket[1m]))
+
+# Average confidence
+rate(prediction_confidence_sum[1m]) / rate(prediction_confidence_count[1m])
+```
+
+### Auto-Provisioning
+
+Both the Prometheus datasource and Grafana dashboard are **auto-provisioned** via config files — no manual setup needed:
+
+```
+monitoring/
+├── prometheus.yml                          # Scrape config
+└── grafana/
+    ├── dashboards/
+    │   └── sentiment-dashboard.json        # Dashboard definition (auto-loaded)
+    └── provisioning/
+        ├── datasources/datasource.yml      # Prometheus → Grafana connection
+        └── dashboards/dashboard.yml        # Dashboard provider config
+```
+
+### Access
+
+| Service | URL |
+|---|---|
+| **Grafana Dashboard** | `http://<ec2-ip>:3000` (login: admin/admin) |
+| **Prometheus UI** | `http://<ec2-ip>:9090` |
+| **Raw Metrics** | `http://<ec2-ip>:8000/metrics` |
+
+---
+
+## �🔗 How It All Connects
 
 ### Full Request Flow
 
@@ -470,9 +597,11 @@ Everything runs in a **single container on port 8000** — minimal infrastructur
 8. inference.py passes text to the HuggingFace pipeline
 9. DistilBERT tokenizes → encodes → classifies the text
 10. Model returns: {label: "POSITIVE", score: 0.9998}
-11. Logger writes the prediction to logs/app.log
-12. FastAPI responds: {"sentiment": {label, confidence, model}}
-13. React displays: green "POSITIVE" badge + 99.9% confidence bar
+11. Prometheus metrics are recorded (latency, confidence, count)
+12. Logger writes the prediction to logs/app.log
+13. FastAPI responds: {"sentiment": {label, confidence, model}}
+14. React displays: green "POSITIVE" badge + 99.9% confidence bar
+15. Prometheus scrapes /metrics → Grafana dashboard updates live
 ```
 
 ### Full Deployment Flow
@@ -483,10 +612,13 @@ Everything runs in a **single container on port 8000** — minimal infrastructur
 3. GitHub runner builds Docker image (Node → React build, Python → API)
 4. Image is pushed to GitHub Container Registry
 5. GitHub Actions SSHs into EC2
-6. EC2 pulls the new image from ghcr.io
-7. Old container is stopped and removed
-8. New container starts on port 8000
-9. App is live — zero downtime deployment
+6. Swap file is ensured (prevents OOM on t3.small)
+7. Latest code is pulled (docker-compose.yml, monitoring configs)
+8. Docker Compose plugin is installed if missing
+9. Pre-built app image is pulled from ghcr.io
+10. Old containers are stopped (docker compose down)
+11. All 3 services start (app + prometheus + grafana)
+12. App is live on :8000, Grafana on :3000, Prometheus on :9090
 ```
 
 ---
@@ -531,11 +663,14 @@ Visit `http://localhost:5173` — the Vite dev server proxies API requests to th
 ### Docker (Full Stack)
 
 ```bash
-docker build -t sentiment-api .
-docker run -p 8000:8000 sentiment-api
+# Start all services (app + prometheus + grafana)
+docker-compose up --build -d
 ```
 
-Visit `http://localhost:8000` — both frontend and API served together.
+Visit:
+- `http://localhost:8000` — App (frontend + API)
+- `http://localhost:9090` — Prometheus
+- `http://localhost:3000` — Grafana (login: admin/admin)
 
 ---
 
@@ -561,6 +696,11 @@ Visit `http://localhost:8000` — both frontend and API served together.
 | **Logistic Regression** | Classical ML classifier (baseline model) |
 | **Cloud Computing** | AWS EC2 for always-on hosting |
 | **Security Groups** | AWS virtual firewall controlling network access |
+| **Prometheus Metrics** | Custom counters and histograms exposed at `/metrics` |
+| **Grafana Dashboards** | Auto-provisioned dashboards with PromQL queries |
+| **Docker Compose** | Multi-container orchestration (app + monitoring stack) |
+| **PromQL** | Prometheus query language for rates, histograms, percentiles |
+| **Swap Memory** | Linux swap file to extend available memory on small instances |
 | **Elastic IP** | Static IP address for consistent access |
 | **Environment Variables** | `VITE_API_URL` for configurable API endpoint |
 
@@ -572,9 +712,14 @@ Visit `http://localhost:8000` — both frontend and API served together.
 - Building a full-stack app with FastAPI serving both API and frontend
 - Multi-stage Docker builds for efficient containerization
 - Setting up CI/CD that builds on powerful GitHub runners and deploys to a lightweight EC2 instance
-- Working with AWS EC2, security groups, and networking
-- Debugging real deployment issues: Docker permissions, port conflicts, CORS, IP changes, SSH timeouts, image tag casing
-- The value of keeping infrastructure simple — one container, one port, one command to deploy
+- **Implementing real-time model monitoring** with Prometheus metrics (counters, histograms) and Grafana dashboards
+- **Docker Compose** for orchestrating multi-container deployments (app + monitoring stack)
+- **PromQL** queries for tracking latency percentiles, request rates, and confidence distributions
+- Working with AWS EC2, security groups, Elastic IPs, and instance sizing
+- **Diagnosing and fixing OOM issues** on resource-constrained instances using swap memory
+- Auto-provisioning Grafana datasources and dashboards via config files
+- Debugging real deployment issues: Docker permissions, port conflicts, CORS, IP changes, SSH timeouts, image tag casing, memory exhaustion
+- The value of observability — seeing model health in real-time instead of waiting for user complaints
 
 ---
 
